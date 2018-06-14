@@ -4,8 +4,6 @@ https://g9uh4qnvze.execute-api.us-east-1.amazonaws.com/dev
 
 POST /
 {
-  "ubject": "HTTP to Email is a GO!!!! MORE !!",
-  "dy": "Go! GO! GO!!",
-  "ID": 33,
-  "name": "Danny"
+  "subject": "HTTP to Email is a GO!!!! MORE !!",
+  "body": "Go! GO! GO!!"
 }
