@@ -27,7 +27,7 @@ type Email = {
 
 module Emailer =
   [<Literal>] 
-  let Sender = "notifier@staticgarden.com"
+  let Sender = "notifier@mail.staticgarden.com"
 
   let Send(email: Email) =
       use client = new AmazonSimpleEmailServiceClient()
