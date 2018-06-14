@@ -26,7 +26,7 @@ type Email = {
 }
 
 module Emailer =
-  [<Literal>] 
+  [<Literal>]
   let Sender = "notifier@mail.staticgarden.com"
 
   let Send(email: Email) =
@@ -37,7 +37,7 @@ module Emailer =
       (List.iter recipients.Add, email.To) |> ignore
       emailReq.Destination <- Destination(recipients)
       let resp = client.SendEmailAsync emailReq
-      resp.RunSynchronously()
+      resp.Wait()
 
 module Handler =
 
