@@ -1,0 +1,9 @@
+https://g9uh4qnvze.execute-api.us-east-1.amazonaws.com/dev
+
+-v
+
+POST /
+{
+  "subject": "HTTP to Email is a GO!",
+  "body": "Go! GO! GO!!"
+}

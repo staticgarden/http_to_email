@@ -55,6 +55,10 @@ package:
 functions:
   hello:
     handler: FsharpHandlers::AwsDotnetFsharp.Handler::hello
+    events:
+      - http:
+          path: /
+          method: post
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

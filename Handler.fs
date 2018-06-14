@@ -20,4 +20,4 @@ module Handler =
 
     let hello(request: APIGatewayProxyRequest) =
       let emailReq = EmailRequest.Parse(request.Body)
-      APIGatewayProxyResponse(StatusCode=200, Body = (sprintf ">> %A" emailReq))
+      APIGatewayProxyResponse(StatusCode=200, Body = (sprintf ">> SUB: %s\n BODY: %s" emailReq.Subject emailReq.Body))
