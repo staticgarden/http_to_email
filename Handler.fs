@@ -1,17 +1,23 @@
 namespace AwsDotnetFsharp
 open Amazon.Lambda.Core
+open Amazon.Lambda.APIGatewayEvents
+open FSharp.Data
 
 [<assembly:LambdaSerializer(typeof<Amazon.Lambda.Serialization.Json.JsonSerializer>)>]
 do ()
 
-type Request = { Key1 : string; Key2 : string; Key3 : string }
-type Response = { Message : string; Request : Request }
+type EmailRequest = JsonProvider<"""
+{
+  "subject": "Awesome email subject",
+  "body": "Awesome Email Body"
+}
+""">
 
 module Handler =
     open System
     open System.IO
     open System.Text
 
-    let hello(request:Request) =
-        { Message="Go Serverless v1.0! Your function executed successfully!"
-          Request=request }
+    let hello(request: APIGatewayProxyRequest) =
+      let emailReq = EmailRequest.Parse(request.Body)
+      APIGatewayProxyResponse(StatusCode=200, Body = (sprintf ">> %A" emailReq))
