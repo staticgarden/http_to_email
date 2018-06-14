@@ -20,8 +20,9 @@ service: aws-fsharp # NOTE: update this with your service name
 provider:
   name: aws
   runtime: dotnetcore2.0
+  profile: staticgarden-serverless
   memorySize: 128 # optional, in MB, default is 1024
-  timeout: 10 # optional, in seconds, default is 6
+  timeout: 5 # optional, in seconds, default is 6
   # you can add statements to the Lambda function's IAM Role here
   iamRoleStatements:
     - Effect: "Allow"

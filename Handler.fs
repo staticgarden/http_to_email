@@ -4,7 +4,6 @@ open Amazon.Lambda.APIGatewayEvents
 open FSharp.Data
 open Amazon.SimpleEmail
 open Amazon.SimpleEmail.Model
-open System.Collections.Generic
 
 [<assembly:LambdaSerializer(typeof<Amazon.Lambda.Serialization.Json.JsonSerializer>)>]
 do ()
@@ -33,9 +32,10 @@ module Emailer =
       use client = new AmazonSimpleEmailServiceClient()
       let emailReq = SendEmailRequest()
       emailReq.Source <- Sender
-      let recipients = List<string>()
-      (List.iter recipients.Add, email.To) |> ignore
-      emailReq.Destination <- Destination(recipients)
+      let dest = new Destination()
+      (List.iter dest.ToAddresses.Add, email.To) |> ignore
+      emailReq.Destination <- dest
+      emailReq.Message <- Message(Content(email.Subject), Body(Content(email.TextBody)))
       let resp = client.SendEmailAsync emailReq
       resp.Wait()
 
@@ -43,10 +43,10 @@ module Handler =
 
     let hello(request: APIGatewayProxyRequest) =
       let emailReq = EmailRequest.Parse(request.Body)
-      Emailer.Send({
-        From = Emailer.Sender
+
+      { From = Emailer.Sender
         To = ["minhajuddink@gmail.com"]
         Subject = emailReq.Subject
         TextBody = emailReq.Body
-      }) |> ignore
+      } |> Emailer.Send |> ignore
       APIGatewayProxyResponse(StatusCode=200, Body = "{}", Headers = Map[("content-type", "application/json")])
